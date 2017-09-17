@@ -5,7 +5,7 @@
 
 	<groupId>com.example.sleuthTest</groupId>
 	<artifactId>sleuth-eureka-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>sleuth-eureka-server</name>
@@ -71,12 +71,14 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.13</version>
 				<configuration>
-					<dockerHost>https://192.168.99.100:2376</dockerHost>
-					<dockerCertPath>C:\Users\Administrator\.docker\machine\machines\default</dockerCertPath>
+					<!-- <dockerHost>https://192.168.99.100:2376</dockerHost> -->
+					<!-- <dockerCertPath>C:\Users\Administrator\.docker\machine\machines\default</dockerCertPath> -->
 					<!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
 					<!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
-					<imageName>lgx187/sleuth-eureka-server:0.0.11</imageName>
-					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+					<imageName>lgx187/${project.artifactId}:${project.version}</imageName>
+					<baseImage>java</baseImage>
+					<!-- <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory> -->
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
